@@ -26,4 +26,26 @@ module.exports = (router) => {
       return res.json(dogData);
     });
   });
-}
+
+  router.put('/dogs/:id', (req, res) => {
+    var dogData = req.body;
+    delete dogData._id;
+
+    Dog.update({ _id: req.params.id }, dogData, (err) => {
+      if (err) return errorHandler(err, res);
+
+      console.log('Mongo says: Updated!');
+      return res.status(200).json({ msg: 'Dog Updated' });
+
+    });
+  });
+
+  router.delete('/dogs/:id', (req, res) => {
+    Dog.findOneAndRemove({ _id: req.params.id }, (err) => {
+      if (err) return errorHandler(err, res);
+
+      console.log('Mongo says: Removed!');
+      return res.status(200).json({ msg: 'Dog Deleted' });
+    });
+  });
+};
