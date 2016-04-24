@@ -20,3 +20,5 @@ gulp.task('mocha', () => {
   return gulp.src(testScripts)
   .pipe(mocha({ 'reporter': 'nyan' }));
 });
+
+gulp.task('default', ['lint', 'mocha']);
