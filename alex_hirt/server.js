@@ -12,12 +12,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dog_teams', (er
   else console.log('Opened connection to MongoDB');
 });
 
-app.use('/api', dogRouter);
-
 require(__dirname + '/routes/dog-routes')(dogRouter);
-// require(__dirname + '/routes/musher-routes')(musherRouter);
+require(__dirname + '/routes/musher-routes')(musherRouter);
 
-app.use('/api/dogs', dogRouter);
+app.use('/api', dogRouter, musherRouter);
 
 app.listen(port, () => {
   console.log('Server listening on localhost:' + port);
